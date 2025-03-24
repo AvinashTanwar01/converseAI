@@ -1,6 +1,5 @@
 import InterviewCard from '@/components/InterviewCard'
 import { Button } from '@/components/ui/button'
-import { dummyInterviews } from '@/constants'
 import { getCurrentUser} from '@/lib/actions/auth.action'
 import { getInterviewsByUserId, getLatestInterviews } from '@/lib/actions/general.action'
 import Image from 'next/image'
@@ -14,8 +13,8 @@ const page = async() => {
     await getLatestInterviews({userId: user?.id!})
   ])
 
-  const hasPastInterviews = userInterviews?.length>0;
-  const hasUpcomingInterviews = latestInterviews?.length>0;
+  const hasPastInterviews = Array.isArray(userInterviews) && userInterviews.length > 0;
+  const hasUpcomingInterviews = latestInterviews ? latestInterviews.length > 0 : false;
   return (
     <>
       <section className='card-cta'>
